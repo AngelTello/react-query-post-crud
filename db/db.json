@@ -1,0 +1,81 @@
+{
+  "authors": [
+    {
+      "id": 1,
+      "name": "ATello"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "react-query",
+      "body": "React query is a very efficient query caching client for the front-end which can replace traditional methods of fetching data on the mounting stage of the component and global state management like Redux/MobX in some use cases.",
+      "sourceUrl": "https://tanstack.com/query/v4/docs/react/overview",
+      "isPublished": true,
+      "authorId": 1
+    },
+    {
+      "id": 2,
+      "title": "json-server",
+      "body": "Today we will look into a very handy tool json-server, which can give you a mock rest json server in a minute. In a regular enterprise application, you work with many teams and third party APIs. Imagine you have to call a third party restful web service that will get you JSON data to work on. You are in a tight schedule, so you can’t wait for them to finish their work and then start your own. If you wish to have a mockup Rest Web service in place to get the demo data for you, then json-server is the tool you are looking for.",
+      "sourceUrl": "https://www.npmjs.com/package/json-server#getting-started",
+      "isPublished": true,
+      "authorId": 1
+    },
+    {
+      "id": 3,
+      "title": "...Thinking about the immortality of the crab",
+      "body": "The phrase is usually a humorous way of saying that one was not sitting idly, but engaged constructively in contemplation or letting one's mind wander.",
+      "sourceUrl": "",
+      "isPublished": false,
+      "authorId": 1
+    },
+    {
+      "title": "El titulo del post",
+      "body": "El contenido del post",
+      "sourceUrl": "atello.net",
+      "isPublished": false,
+      "authorId": 1,
+      "id": 4
+    },
+    {
+      "title": "Este es otro titulo",
+      "body": "Este es otro contenido de otro post published = true",
+      "sourceUrl": "www.atello.net",
+      "isPublished": true,
+      "authorId": 1,
+      "id": 5
+    },
+    {
+      "title": "Otro dummy post",
+      "body": "Este es otro dummy post",
+      "sourceUrl": "bummy.com.mx",
+      "isPublished": false,
+      "authorId": 1,
+      "id": 6
+    },
+    {
+      "title": "Another post",
+      "body": "Another contest",
+      "sourceUrl": "www.google.com",
+      "isPublished": true,
+      "authorId": 1,
+      "id": 7
+    },
+    {
+      "id": 8,
+      "title": "x1",
+      "body": "y1",
+      "sourceUrl": "z1",
+      "isPublished": true,
+      "authorId": 1
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ]
+}
