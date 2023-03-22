@@ -25,7 +25,6 @@ import AddPost from "./AddPost.component";
 import EditPost from "./EditPost.component";
 
 const Posts = () => {
-  const [editPostId, setEditPostId] = useState<number>(-1);
   const [deletePostId, setDeletePostId] = useState<null | number>(null);
   const [isAddPostModalOpen, setIsAddPostModalOpen] = useState(false);
   const [editPostModalConfig, setEditPostModalConfig] = useState({
@@ -82,8 +81,8 @@ const Posts = () => {
       dataIndex: "sourceUrl",
       key: "sourceUrl",
       render: (url: string) =>
-        url.trim() != "" ? (
-          <a href={url} target="_blank">
+        url.trim() !== "" ? (
+          <a href={url} target="_blank" rel="noreferrer">
             Go to website
           </a>
         ) : (
