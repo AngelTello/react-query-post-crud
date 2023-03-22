@@ -5,6 +5,7 @@ import Posts from "./components/posts/Posts.component";
 
 import "./App.css";
 import PostDetail from "./components/posts/PostDetail.component";
+import Home from "./Home.component";
 
 const { Header, Content, Footer } = Layout;
 
@@ -77,14 +78,6 @@ const AppLayout = () => {
         Ant Design ©2023 Created by ATello
       </Footer>
     </Layout>
-  );
-};
-
-const Home = () => {
-  return (
-    <div>
-      <h2>Home</h2>
-    </div>
   );
 };
 
