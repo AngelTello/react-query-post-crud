@@ -5,7 +5,6 @@ import { Spin, Result, Button } from "antd";
 import { getPostsById } from "../../api/postsApi";
 import {
   Wrapper,
-  MyButton,
   MyYesButton,
   MyNoButton,
 } from "./PostDetail.styles";

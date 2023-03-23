@@ -8,12 +8,6 @@ export const Wrapper = styled.section`
   background: papayawhip;
 `;
 
-export const MyButton = styled(Button)`
-  background: red;
-  color: white;
-  width: 200px !important;
-`;
-
 export const MyYesButton = styled(Button)`
   background: green;
   color: white;
