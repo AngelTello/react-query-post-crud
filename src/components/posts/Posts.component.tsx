@@ -34,7 +34,7 @@ const Posts = () => {
 
   const queryClient = useQueryClient();
 
-  const { isLoading, isError, data } = useQuery({
+  const { isLoading, isFetching, isError, data } = useQuery({
     queryKey: ["posts"],
     queryFn: getPosts,
     staleTime: 5000
@@ -217,7 +217,7 @@ const Posts = () => {
     <div className="posts-container">
       {contextHolder}
       <h2>Posts</h2>
-      {isLoading && <Spin />}
+      {isLoading || isFetching && <Spin />}
       {isError && (
         <Result
           status="warning"

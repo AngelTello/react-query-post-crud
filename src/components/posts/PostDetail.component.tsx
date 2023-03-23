@@ -3,11 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Spin, Result, Button } from "antd";
 import { getPostsById } from "../../api/postsApi";
-import {
-  Wrapper,
-  MyYesButton,
-  MyNoButton,
-} from "./PostDetail.styles";
+import { Wrapper, MyYesButton, MyNoButton } from "./PostDetail.styles";
 import { CheckSquareOutlined, BorderOutlined } from "@ant-design/icons";
 
 const PostDetail = () => {
@@ -61,11 +57,11 @@ const PostDetail = () => {
           <h3>{data.title}</h3>
           <p>{data.body}</p>
           <p>Posted by {data.author.name}</p>
-          <p>
-            <Link to="/posts">...Return to Posts</Link>
-          </p>
         </Wrapper>
       )}
+      <p>
+        <Link to="/posts">...Return to Posts</Link>
+      </p>
     </div>
   );
 };
