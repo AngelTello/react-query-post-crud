@@ -1,20 +1,50 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Spin, Result, Button } from "antd";
 import { getPostsById } from "../../api/postsApi";
-import { Wrapper } from "./PostDetail.styles";
+import {
+  Wrapper,
+  MyButton,
+  MyYesButton,
+  MyNoButton,
+} from "./PostDetail.styles";
+import { CheckSquareOutlined, BorderOutlined } from "@ant-design/icons";
 
 const PostDetail = () => {
+  const [canDataBeLoaded, setCanDataBeLoaded] = useState<boolean>(false);
   const { postId } = useParams();
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["post", postId],
     queryFn: () => getPostsById(+postId!),
+    enabled: canDataBeLoaded,
   });
 
   return (
     <div className="posts-container">
       <h2>PostDetail {postId}</h2>
+      {canDataBeLoaded && (
+        <MyYesButton
+          type="primary"
+          icon={<CheckSquareOutlined />}
+          onClick={() => setCanDataBeLoaded(false)}
+          disabled
+        >
+          Data loaded
+        </MyYesButton>
+      )}
+      {!canDataBeLoaded && (
+        <MyNoButton
+          type="primary"
+          icon={<BorderOutlined />}
+          onClick={() => setCanDataBeLoaded(true)}
+        >
+          Data NOT loaded
+        </MyNoButton>
+      )}
+      <br />
+      <br />
       {isLoading && <Spin />}
       {isError && (
         <Result

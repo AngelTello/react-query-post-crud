@@ -1,7 +1,7 @@
 import React from "react";
 import { Divider, Typography } from "antd";
 
-const { Title, Paragraph, Text, Link } = Typography;
+const { Title, Paragraph, Text } = Typography;
 
 const Home: React.FC = () => (
   <Typography>
@@ -48,9 +48,9 @@ const Home: React.FC = () => (
 
     <Title>
       <img
-        src="https://react-query-v3.tanstack.com/_next/static/images/logo-7a7896631260eebffcb031765854375b.svg"
+        src="https://blog.theodo.com/static/bb12ede8ede50acc8cdb447e7dc8bf6e/6fe88/rq-logo.png"
         width={240}
-        height={47}
+        height={127}
         alt="React Query"
       />
     </Title>
@@ -64,7 +64,7 @@ const Home: React.FC = () => (
       <ul>
         <li>
           <a
-            href="https://react-query-v3.tanstack.com/"
+            href="https://tanstack.com/query/latest/docs/react/overview"
             target="_blank"
             rel="noreferrer"
           >

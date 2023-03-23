@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Button } from "antd";
 
 export const Wrapper = styled.section`
   display: flex;
@@ -6,3 +7,23 @@ export const Wrapper = styled.section`
   padding: 4em;
   background: papayawhip;
 `;
+
+export const MyButton = styled(Button)`
+  background: red;
+  color: white;
+  width: 200px !important;
+`;
+
+export const MyYesButton = styled(Button)`
+  background: green;
+  color: white;
+  width: 200px !important;
+`;
+
+export const MyNoButton = styled(Button)`
+  background: red;
+  color: white;
+  width: 200px !important;
+`;
+
+

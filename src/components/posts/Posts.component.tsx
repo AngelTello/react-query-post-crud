@@ -37,6 +37,7 @@ const Posts = () => {
   const { isLoading, isError, data } = useQuery({
     queryKey: ["posts"],
     queryFn: getPosts,
+    staleTime: 5000
   });
 
   const deletePostMutation = useMutation({
