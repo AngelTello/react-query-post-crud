@@ -69,6 +69,27 @@
       "sourceUrl": "z1",
       "isPublished": true,
       "authorId": 1
+    },
+    {
+      "title": "adsa",
+      "body": "asdasd",
+      "isPublished": false,
+      "authorId": 1,
+      "id": 9
+    },
+    {
+      "title": "sdfsdfs",
+      "body": "sdfsdf",
+      "isPublished": false,
+      "authorId": 1,
+      "id": 10
+    },
+    {
+      "title": "sdfsgds",
+      "body": "sdgsdgs",
+      "isPublished": true,
+      "authorId": 1,
+      "id": 11
     }
   ],
   "comments": [

@@ -10,6 +10,7 @@ import {
   message,
   Popconfirm,
 } from "antd";
+import _ from "lodash";
 
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 
@@ -37,7 +38,7 @@ const Posts = () => {
   const { isLoading, isFetching, isError, data } = useQuery({
     queryKey: ["posts"],
     queryFn: getPosts,
-    staleTime: 5000
+    staleTime: 5000,
   });
 
   const deletePostMutation = useMutation({
@@ -82,7 +83,7 @@ const Posts = () => {
       dataIndex: "sourceUrl",
       key: "sourceUrl",
       render: (url: string) =>
-        url.trim() !== "" ? (
+        _.trim(url) !== "" ? (
           <a href={url} target="_blank" rel="noreferrer">
             Go to website
           </a>
@@ -217,7 +218,7 @@ const Posts = () => {
     <div className="posts-container">
       {contextHolder}
       <h2>Posts</h2>
-      {isLoading || isFetching && <Spin />}
+      {isLoading || (isFetching && <Spin />)}
       {isError && (
         <Result
           status="warning"

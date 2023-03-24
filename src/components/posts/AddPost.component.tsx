@@ -26,6 +26,14 @@ const AddPost = (props: any) => {
       queryClient.invalidateQueries(["posts"]);
       onSaveSuccess(data);
     },
+    onError: (data) => {
+      console.log("There was an error while trying to add a new Post", data);
+    },
+    onSettled: () => {
+      console.log(
+        "We are done here! ...I don't care if the record got added or not u can just see this message as the last step in the attempt to add the record"
+      );
+    },
   });
 
   const handleCancel = () => {
@@ -45,8 +53,6 @@ const AddPost = (props: any) => {
   };
 
   const handleFieldsChange = () => {
-    const invalidFields = form.getFieldsError().some((field) => field.errors.length > 0);
-    console.log("...invalidFields", invalidFields);
     setButtonSubmitDisabled(
       form.getFieldsError().some((field) => field.errors.length > 0)
     );
