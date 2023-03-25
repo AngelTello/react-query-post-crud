@@ -3,15 +3,17 @@ import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 import { Modal, Form, Input, Switch } from "antd";
 import type { FormInstance } from "antd/es/form";
-
-import { createPost } from "../../api/postsApi";
+import { usePost } from "../../hooks/usePost";
 
 const AddPost = (props: any) => {
   const {
     isOpen = false,
     onSaveSuccess = () => null,
+    onSaveError = () => null,
     onCancel = () => null,
   } = props;
+
+  const { createPost } = usePost();
 
   const queryClient = useQueryClient();
 
@@ -23,15 +25,17 @@ const AddPost = (props: any) => {
   const createPostMutation = useMutation({
     mutationFn: createPost,
     onSuccess: (data) => {
+      form.resetFields();
+
       queryClient.invalidateQueries(["posts"]);
       onSaveSuccess(data);
     },
     onError: (data) => {
-      console.log("There was an error while trying to add a new Post", data);
+      onSaveError(data);
     },
     onSettled: () => {
       console.log(
-        "We are done here! ...I don't care if the record got added or not u can just see this message as the last step in the attempt to add the record"
+        "We are done here! ...I don't care if the record got added or not u can just see this message as the last step in the add the record function"
       );
     },
   });
@@ -48,8 +52,6 @@ const AddPost = (props: any) => {
       ...newPost,
       authorId: 1,
     });
-
-    form.resetFields();
   };
 
   const handleFieldsChange = () => {

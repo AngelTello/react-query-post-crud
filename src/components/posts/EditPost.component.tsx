@@ -3,18 +3,23 @@ import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 
 import { Modal, Form, Input, Switch, Result, Spin, Button } from "antd";
 import type { FormInstance } from "antd/es/form";
-
-import { getPostsById, editPost } from "../../api/postsApi";
+import { usePost } from "../../hooks/usePost";
 
 const EditPost = (props: any) => {
-  const { config, onSaveSuccess = () => null, onCancel = () => null } = props;
+  const {
+    config,
+    onSaveSuccess = () => null,
+    onSaveError = () => null,
+    onCancel = () => null,
+  } = props;
+
+  const { getPostsById, editPost } = usePost();
 
   const queryClient = useQueryClient();
 
-  const { isLoading, isError, data } = useQuery({
+  const { isLoading, isError, data, refetch } = useQuery({
     queryKey: ["posts", config.id],
     queryFn: () => getPostsById(config.id),
-    enabled: config.id > 0,
   });
 
   const [form] = Form.useForm();
@@ -25,8 +30,18 @@ const EditPost = (props: any) => {
   const editPostMutation = useMutation({
     mutationFn: editPost,
     onSuccess: (data) => {
+      form.resetFields();
+
       queryClient.invalidateQueries(["posts"]);
       onSaveSuccess(data);
+    },
+    onError: (data) => {
+      onSaveError(data);
+    },
+    onSettled: () => {
+      console.log(
+        "We are done here! ...I don't care if the record got added or not u can just see this message as the last step in the add the record function"
+      );
     },
   });
 
@@ -41,14 +56,17 @@ const EditPost = (props: any) => {
     console.log("...handleSave", editPost);
 
     editPostMutation.mutate(editPost);
-
-    form.resetFields();
   };
 
   const handleFieldsChange = () => {
     setButtonSubmitDisabled(
       form.getFieldsError().some((field) => field.errors.length > 0)
     );
+  };
+
+  const handleManualPostRefetch = () => {
+    // manually refetch
+    refetch();
   };
 
   return (
@@ -67,7 +85,11 @@ const EditPost = (props: any) => {
           status="warning"
           title="There are some problems with your operation."
           extra={
-            <Button type="primary" key="retry">
+            <Button
+              type="primary"
+              key="retry"
+              onClick={handleManualPostRefetch}
+            >
               Try Again
             </Button>
           }
@@ -95,10 +117,7 @@ const EditPost = (props: any) => {
           <Form.Item name="body" label="Body" rules={[{ required: true }]}>
             <TextArea rows={4} />
           </Form.Item>
-          <Form.Item
-            name="sourceUrl"
-            label="URL Source (Website)"
-          >
+          <Form.Item name="sourceUrl" label="URL Source (Website)">
             <Input />
           </Form.Item>
           <Form.Item

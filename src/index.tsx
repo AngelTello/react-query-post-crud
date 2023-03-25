@@ -9,10 +9,12 @@ import reportWebVitals from "./reportWebVitals";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false, // default: true
+      refetchOnWindowFocus: false,
+      retry: 3,
+      retryDelay: 3000, // default: true
     },
   },
-})
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

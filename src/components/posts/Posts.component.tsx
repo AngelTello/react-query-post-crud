@@ -14,18 +14,20 @@ import _ from "lodash";
 
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 
-import { getPosts, deletePost } from "../../api/postsApi";
-
 import {
   PlusOutlined,
   SmileOutlined,
+  FrownOutlined,
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
 import AddPost from "./AddPost.component";
 import EditPost from "./EditPost.component";
+import { usePost } from "../../hooks/usePost";
 
 const Posts = () => {
+  const { getPosts, deletePost } = usePost();
+
   const [deletePostId, setDeletePostId] = useState<null | number>(null);
   const [isAddPostModalOpen, setIsAddPostModalOpen] = useState(false);
   const [editPostModalConfig, setEditPostModalConfig] = useState({
@@ -35,7 +37,7 @@ const Posts = () => {
 
   const queryClient = useQueryClient();
 
-  const { isLoading, isFetching, isError, data } = useQuery({
+  const { isLoading, isFetching, isError, data, refetch } = useQuery({
     queryKey: ["posts"],
     queryFn: getPosts,
     staleTime: 5000,
@@ -165,6 +167,21 @@ const Posts = () => {
     });
   };
 
+  const handleAddPostModalError = ({ data }: any) => {
+    console.log("handleAddPostModalSuccess - Error", data);
+
+    openNewPostErrorNotification();
+  };
+
+  const openNewPostErrorNotification = () => {
+    api.open({
+      message: "New Post add attempt failed",
+      description:
+        "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
+      icon: <FrownOutlined style={{ color: "red" }} />,
+    });
+  };
+
   const handleEditPostModalOpen = (postId: number) => {
     console.log("EditPostModalOpen - Open");
 
@@ -186,19 +203,34 @@ const Posts = () => {
   const handleEditPostModalSuccess = ({ data }: any) => {
     console.log("handleEditPostModalSuccess - Success", data);
 
-    openNewPostEditNotification();
+    openPostEditNotification();
     setEditPostModalConfig({
       isOpen: false,
       id: -1,
     });
   };
 
-  const openNewPostEditNotification = () => {
+  const openPostEditNotification = () => {
     api.open({
       message: "Changes Saved",
       description:
         "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
       icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+    });
+  };
+
+  const handleEditPostModalError = ({ data }: any) => {
+    console.log("handleEditPostModalSuccess - Success", data);
+
+    openNewPostEditErrorNotification();
+  };
+
+  const openNewPostEditErrorNotification = () => {
+    api.open({
+      message: "Edit Post attempt failed",
+      description:
+        "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
+      icon: <FrownOutlined style={{ color: "red" }} />,
     });
   };
 
@@ -214,6 +246,11 @@ const Posts = () => {
     setDeletePostId(null);
   };
 
+  const handleManualPostRefetch = () => {
+    // manually refetch
+    refetch();
+  };
+
   return (
     <div className="posts-container">
       {contextHolder}
@@ -224,7 +261,11 @@ const Posts = () => {
           status="warning"
           title="There are some problems with your operation."
           extra={
-            <Button type="primary" key="retry">
+            <Button
+              type="primary"
+              key="retry"
+              onClick={handleManualPostRefetch}
+            >
               Try Again
             </Button>
           }
@@ -245,12 +286,14 @@ const Posts = () => {
       <AddPost
         isOpen={isAddPostModalOpen}
         onSaveSuccess={handleAddPostModalSuccess}
+        onSaveError={handleAddPostModalError}
         onCancel={handleAddPostModalCancel}
       />
       {editPostModalConfig.id > 0 && (
         <EditPost
           config={editPostModalConfig}
           onSaveSuccess={handleEditPostModalSuccess}
+          onError={handleEditPostModalError}
           onCancel={handleEditPostModalCancel}
         />
       )}
