@@ -23,11 +23,9 @@ import {
 } from "@ant-design/icons";
 import AddPost from "./AddPost.component";
 import EditPost from "./EditPost.component";
-import { usePost } from "../../hooks/usePost";
+import { getPosts, deletePost } from "../../api/postsApi";
 
 const Posts = () => {
-  const { getPosts, deletePost } = usePost();
-
   const [deletePostId, setDeletePostId] = useState<null | number>(null);
   const [isAddPostModalOpen, setIsAddPostModalOpen] = useState(false);
   const [editPostModalConfig, setEditPostModalConfig] = useState({

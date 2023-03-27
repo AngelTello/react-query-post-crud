@@ -3,7 +3,7 @@ import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 
 import { Modal, Form, Input, Switch, Result, Spin, Button } from "antd";
 import type { FormInstance } from "antd/es/form";
-import { usePost } from "../../hooks/usePost";
+import { getPostsById, updatePost } from "../../api/postsApi";
 
 const EditPost = (props: any) => {
   const {
@@ -12,8 +12,6 @@ const EditPost = (props: any) => {
     onSaveError = () => null,
     onCancel = () => null,
   } = props;
-
-  const { getPostsById, editPost } = usePost();
 
   const queryClient = useQueryClient();
 
@@ -28,7 +26,7 @@ const EditPost = (props: any) => {
   const [buttonSubmitDisabled, setButtonSubmitDisabled] = useState(false);
 
   const editPostMutation = useMutation({
-    mutationFn: editPost,
+    mutationFn: updatePost,
     onSuccess: (data) => {
       form.resetFields();
 

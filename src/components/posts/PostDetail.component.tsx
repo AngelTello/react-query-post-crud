@@ -4,10 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { Spin, Result, Button } from "antd";
 import { Wrapper, MyYesButton, MyNoButton } from "./PostDetail.styles";
 import { CheckSquareOutlined, BorderOutlined } from "@ant-design/icons";
-import { usePost } from "../../hooks/usePost";
+import { getPostsById } from "../../api/postsApi";
 
 const PostDetail = () => {
-  const {getPostsById} = usePost();
 
   const [canDataBeLoaded, setCanDataBeLoaded] = useState<boolean>(false);
   const { postId } = useParams();

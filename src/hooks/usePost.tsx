@@ -2,10 +2,10 @@ import {
   getPosts,
   getPostsById,
   createPost,
-  editPost,
+  updatePost,
   deletePost,
 } from "../api/postsApi";
 
 export const usePost = () => {
-  return { getPosts, getPostsById, createPost, editPost, deletePost };
+  return { getPosts, getPostsById, createPost, updatePost, deletePost };
 };

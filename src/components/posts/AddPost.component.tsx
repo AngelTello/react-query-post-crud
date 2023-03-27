@@ -3,7 +3,7 @@ import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 import { Modal, Form, Input, Switch } from "antd";
 import type { FormInstance } from "antd/es/form";
-import { usePost } from "../../hooks/usePost";
+import { createPost } from "../../api/postsApi";
 
 const AddPost = (props: any) => {
   const {
@@ -12,8 +12,6 @@ const AddPost = (props: any) => {
     onSaveError = () => null,
     onCancel = () => null,
   } = props;
-
-  const { createPost } = usePost();
 
   const queryClient = useQueryClient();
 
