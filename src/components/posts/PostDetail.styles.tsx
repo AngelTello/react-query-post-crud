@@ -11,13 +11,13 @@ export const Wrapper = styled.section`
 export const MyYesButton = styled(Button)`
   background: green;
   color: white;
-  width: 200px !important;
+  max-width: 350px !important;
 `;
 
 export const MyNoButton = styled(Button)`
   background: red;
   color: white;
-  width: 200px !important;
+  max-width: 350px !important;
 `;
 
 

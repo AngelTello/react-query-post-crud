@@ -4,16 +4,25 @@ import { useQuery } from "@tanstack/react-query";
 import { Spin, Result, Button } from "antd";
 import { Wrapper, MyYesButton, MyNoButton } from "./PostDetail.styles";
 import { CheckSquareOutlined, BorderOutlined } from "@ant-design/icons";
-import { getPostsById } from "../../api/postsApi";
+import { getPostsById, getCommentsByPostId } from "../../api/postsApi";
+import Comments from "./comments/Comments.component";
 
 const PostDetail = () => {
-
   const [canDataBeLoaded, setCanDataBeLoaded] = useState<boolean>(false);
   const { postId } = useParams();
 
   const { isLoading, isError, data } = useQuery({
     queryKey: ["post", postId],
     queryFn: () => getPostsById(+postId!),
+  });
+
+  const {
+    isLoading: isLoadingComments,
+    isError: isErrorComments,
+    data: dataComments,
+  } = useQuery({
+    queryKey: ["post", postId, "comments"],
+    queryFn: () => getCommentsByPostId(+postId!),
     enabled: canDataBeLoaded,
   });
 
@@ -27,7 +36,7 @@ const PostDetail = () => {
           onClick={() => setCanDataBeLoaded(false)}
           disabled
         >
-          Data loaded
+          Comments loaded
         </MyYesButton>
       )}
       {!canDataBeLoaded && (
@@ -36,7 +45,7 @@ const PostDetail = () => {
           icon={<BorderOutlined />}
           onClick={() => setCanDataBeLoaded(true)}
         >
-          Data NOT loaded
+          Comments NOT loaded yet
         </MyNoButton>
       )}
       <br />
@@ -60,6 +69,21 @@ const PostDetail = () => {
           <p>Posted by {data.author.name}</p>
         </Wrapper>
       )}
+
+      {isLoadingComments && <Spin />}
+      {isErrorComments && (
+        <Result
+          status="warning"
+          title="There are some problems with your operation."
+          extra={
+            <Button type="primary" key="retry">
+              Try Again
+            </Button>
+          }
+        />
+      )}
+      {dataComments && <Comments data={dataComments} />}
+
       <p>
         <Link to="/posts">...Return to Posts</Link>
       </p>

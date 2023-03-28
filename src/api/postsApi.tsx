@@ -19,3 +19,9 @@ export const getPostsById = async (id: number) => {
 export const createPost = async (post: any) => productsApi.post("/", post);
 export const updatePost = async (post: any) => productsApi.put(`/${post.id}`, post);
 export const deletePost = async (id: number) => productsApi.delete(`/${id}`);
+
+export const getCommentsByPostId = async (postId: number) => {
+  const res = await productsApi.get(`/${postId}/comments`);
+
+  return res.data;
+};

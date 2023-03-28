@@ -68,6 +68,16 @@
       "id": 1,
       "body": "some comment",
       "postId": 1
+    },
+    {
+      "id": 2,
+      "body": "another comment",
+      "postId": 1
+    },
+    {
+      "id": 3,
+      "body": "one last comment",
+      "postId": 1
     }
   ]
 }
