@@ -9,6 +9,7 @@ import reportWebVitals from "./reportWebVitals";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      //cacheTime: 0, // default: 300000 - which is 5 minutes
       refetchOnWindowFocus: false,
       retry: 3,
       retryDelay: 3000, // default: true

@@ -55,12 +55,12 @@
       "id": 6
     },
     {
-      "title": "Another post",
-      "body": "Another contest",
+      "id": 7,
+      "title": "Another post X",
+      "body": "Another content X",
       "sourceUrl": "www.google.com",
       "isPublished": true,
-      "authorId": 1,
-      "id": 7
+      "authorId": 1
     }
   ],
   "comments": [

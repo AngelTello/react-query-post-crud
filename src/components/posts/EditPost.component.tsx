@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
-import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { Modal, Form, Input, Switch, Result, Spin, Button } from "antd";
 import type { FormInstance } from "antd/es/form";
-import { getPostsById, updatePost } from "../../api/postsApi";
+import { useFetchPost } from "../../hooks/useFetchPost";
+import { useUpdatePost } from "../../hooks/useUpdatePost";
 
 const EditPost = (props: any) => {
   const {
@@ -14,17 +15,20 @@ const EditPost = (props: any) => {
   } = props;
 
   const queryClient = useQueryClient();
+  const { isLoading, isError, data, refetch } = useFetchPost(config.id);
+  const { mutate } = useUpdatePost();
 
-  const { isLoading, isError, data, refetch } = useQuery({
-    queryKey: ["posts", config.id],
-    queryFn: () => getPostsById(config.id),
-  });
+  // const { isLoading, isError, data, refetch } = useQuery({
+  //   queryKey: ["posts", config.id],
+  //   queryFn: () => getPostsById(config.id),
+  // });
 
   const [form] = Form.useForm();
   const formRef = useRef<FormInstance>(null);
   const { TextArea } = Input;
   const [buttonSubmitDisabled, setButtonSubmitDisabled] = useState(false);
 
+  /*
   const editPostMutation = useMutation({
     mutationFn: updatePost,
     onSuccess: (data) => {
@@ -42,6 +46,7 @@ const EditPost = (props: any) => {
       );
     },
   });
+  */
 
   const handleCancel = () => {
     form.resetFields();
@@ -53,7 +58,23 @@ const EditPost = (props: any) => {
 
     console.log("...handleSave", editPost);
 
-    editPostMutation.mutate(editPost);
+    mutate(editPost, {
+      onSuccess: (data) => {
+        form.resetFields();
+
+        queryClient.invalidateQueries(["posts"]);
+
+        onSaveSuccess(data);
+      },
+      onError: (data) => {
+        onSaveError(data);
+      },
+      onSettled: () => {
+        console.log(
+          "We are done here! ...I don't care if the record got added or not u can just see this message as the last step in the add the record function"
+        );
+      },
+    });
   };
 
   const handleFieldsChange = () => {

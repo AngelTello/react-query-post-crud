@@ -4,17 +4,19 @@ import { useQuery } from "@tanstack/react-query";
 import { Spin, Result, Button } from "antd";
 import { Wrapper, MyYesButton, MyNoButton } from "./PostDetail.styles";
 import { CheckSquareOutlined, BorderOutlined } from "@ant-design/icons";
-import { getPostsById, getCommentsByPostId } from "../../api/postsApi";
+import { getCommentsByPostId } from "../../api/postsApi";
 import Comments from "./comments/Comments.component";
+import { useFetchPost } from "../../hooks/useFetchPost";
 
 const PostDetail = () => {
   const [canDataBeLoaded, setCanDataBeLoaded] = useState<boolean>(false);
   const { postId } = useParams();
 
-  const { isLoading, isError, data } = useQuery({
-    queryKey: ["post", postId],
-    queryFn: () => getPostsById(+postId!),
-  });
+  // const { isLoading, isError, data } = useQuery({
+  //   queryKey: ["post", postId],
+  //   queryFn: () => getPostsById(+postId!),
+  // });
+  const { isLoading, isError, data } = useFetchPost(+postId!);
 
   const {
     isLoading: isLoadingComments,

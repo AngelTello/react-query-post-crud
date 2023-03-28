@@ -6,7 +6,7 @@ const Comments = ({ data }: any) => {
     <>
         <br />
         Comments:
-        <Table dataSource={data} columns={columns} />
+        <Table dataSource={data} columns={columns} rowKey="id" />
     </>
   );
 };

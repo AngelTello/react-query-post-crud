@@ -38,7 +38,6 @@ const Posts = () => {
   const { isLoading, isFetching, isError, data, refetch } = useQuery({
     queryKey: ["posts"],
     queryFn: getPosts,
-    staleTime: 5000,
   });
 
   const deletePostMutation = useMutation({
@@ -48,6 +47,12 @@ const Posts = () => {
       queryClient.invalidateQueries(["posts"]);
     },
   });
+
+  const setPostByIdInitialData = (data: any) => {
+    console.log("setPostByPostId", data);
+    
+    queryClient.setQueryData(["post", data.id], data);
+  };
 
   const [api, contextHolder] = notification.useNotification();
 
@@ -114,7 +119,7 @@ const Posts = () => {
           <Button
             icon={<EditOutlined />}
             size="middle"
-            onClick={() => handleEditPostModalOpen(record.id)}
+            onClick={() => handleEditPostModalOpen(record)}
           />
           <Popconfirm
             placement="left"
@@ -180,12 +185,14 @@ const Posts = () => {
     });
   };
 
-  const handleEditPostModalOpen = (postId: number) => {
+  const handleEditPostModalOpen = (data: any) => {
     console.log("EditPostModalOpen - Open");
+
+    setPostByIdInitialData(data);
 
     setEditPostModalConfig({
       isOpen: true,
-      id: postId,
+      id: data.id,
     });
   };
 
